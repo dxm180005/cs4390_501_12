@@ -3,22 +3,23 @@ import java.net.*;
 
 public class client {
 
-    private Socket clientSocket;
-    private BufferedReader in;
-    private DataOutputStream out;
-    private BufferedReader userEntered = new BufferedReader(new InputStreamReader(System.in));
+    private static Socket clientSocket;
+    private static BufferedReader in;
+    private static DataOutputStream out;
+    private static BufferedReader userEntered = new BufferedReader(new InputStreamReader(System.in));
     
-    public void startConnetcion(String ip, int port) {
+    public static void startConnection(String ip, int port) {
         try{
             clientSocket = new Socket(ip, port);
             out = new DataOutputStream(clientSocket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
+            System.out.print("Connection Success");
         } catch(Exception e){
             System.out.print(e);
         }
     }
 
-    public String packet(String pkt){
+    public static String packet(String pkt){
         String recievedPkt;
         try{
             out.writeBytes(pkt);
@@ -29,7 +30,7 @@ public class client {
         return recievedPkt;
     }
 
-    public void stopConnection(){
+    public static void stopConnection(){
         String closeConnectionPkt = "";
         String ack = packet(closeConnectionPkt);
 
@@ -42,5 +43,9 @@ public class client {
                 System.out.print(e);
             }
         }
+    }
+
+    public static void main(String argv[]) {
+    	startConnection("127.0.0.1", 1337);
     }
 }
