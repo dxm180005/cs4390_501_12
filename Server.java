@@ -1,5 +1,6 @@
 import java.net.*;
 import java.io.*;
+import java.util.HashMap;
 
 public class Server {
 
@@ -8,6 +9,8 @@ public class Server {
       		String clientSentence; 
       		String capitalizedSentence; 
 		
+		//HashMap<S
+
 		ServerSocket welcomeSocket; 
 
 		try{
@@ -19,33 +22,42 @@ public class Server {
 		 
 			while(true) { 
 	  
-				Socket connectionSocket = welcomeSocket.accept(); 
+				Socket connectionSocket = welcomeSocket.accept();
+				System.out.println(); 
 
 				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); 
 
 
 				DataOutputStream  outToClient = new DataOutputStream(connectionSocket.getOutputStream()); 
-
+				capitalizedSentence = "";
 				while((clientSentence = inFromClient.readLine()) != null)
 				{
 					System.out.println(clientSentence);
-				
+					capitalizedSentence += clientSentence;
 
 
 				} 
+				
+	
+				outToClient.writeBytes(capitalizedSentence);
 
-				//outToClient.writeBytes(capitalizedSentence); 
+				connectionSocket.close(); 
 			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-		} 
-    } 
+		}
+	} 
+
+	
+	public class connectRecord {
+
+		SocketAddress clientIP; 
 
 
 
-
+	}
 
 
 }
