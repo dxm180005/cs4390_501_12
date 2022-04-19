@@ -45,7 +45,8 @@ public class client {
         }
     }
 
-    public static void main(String argv[]) {
+    public static void main(String argv[]) throws Exception {
     	startConnection("127.0.0.1", 1337);
+    	packet("Test");
     }
 }
