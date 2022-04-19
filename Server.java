@@ -12,7 +12,7 @@ public class Server {
 
 		try{
       			welcomeSocket = new ServerSocket(6789); 
-
+			System.out.println("Server succesfully created on Port 6789");
 		
 
 
