@@ -7,28 +7,40 @@ public class Server {
     	{ 
       		String clientSentence; 
       		String capitalizedSentence; 
+		
+		ServerSocket welcomeSocket; 
 
-      		ServerSocket welcomeSocket = new ServerSocket(6789); 
-  
-      		while(true) { 
-  
-            		Socket connectionSocket = welcomeSocket.accept(); 
+		try{
+      			welcomeSocket = new ServerSocket(6789); 
 
-           		BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); 
+		
 
 
-           		DataOutputStream  outToClient = new DataOutputStream(connectionSocket.getOutputStream()); 
+		 
+			while(true) { 
+	  
+				Socket connectionSocket = welcomeSocket.accept(); 
 
-           		while((clientSentence = inFromClient.readLine()) != null)
-			{
-				System.out.println(clientSentence);
+				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); 
+
+
+				DataOutputStream  outToClient = new DataOutputStream(connectionSocket.getOutputStream()); 
+
+				while((clientSentence = inFromClient.readLine()) != null)
+				{
+					System.out.println(clientSentence);
 				
 
 
-			} 
+				} 
 
-           		//outToClient.writeBytes(capitalizedSentence); 
-        } 
+				//outToClient.writeBytes(capitalizedSentence); 
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		} 
     } 
 
 
