@@ -13,7 +13,7 @@ public class client {
             clientSocket = new Socket(ip, port);
             out = new DataOutputStream(clientSocket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
-            System.out.print("Connection Success");
+            System.out.print("Connection Success on port 1337\n");
         } catch(Exception e){
             System.out.print(e);
         }
@@ -22,6 +22,7 @@ public class client {
     public static String packet(String pkt){
         String recievedPkt;
         try{
+        	System.out.print("Sending Packet: " + pkt);
             out.writeBytes(pkt);
             recievedPkt = in.readLine();
         }catch(Exception e){
@@ -31,7 +32,7 @@ public class client {
     }
 
     public static void stopConnection(){
-        String closeConnectionPkt = "";
+        String closeConnectionPkt = "close";
         String ack = packet(closeConnectionPkt);
 
         if(ack == "ackClose"){
@@ -47,6 +48,9 @@ public class client {
 
     public static void main(String argv[]) throws Exception {
     	startConnection("127.0.0.1", 1337);
-    	packet("Test");
+    	String recievedPkt = packet("Test");
+    	System.out.print("Packet recieved: " + recievedPkt);
+    	
+    	stopConnection();
     }
 }
