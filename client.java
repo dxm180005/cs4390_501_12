@@ -13,6 +13,7 @@ public class client {
             clientSocket = new Socket(ip, port);
             out = new DataOutputStream(clientSocket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
+            System.out.print("Connection Success");
         } catch(Exception e){
             System.out.print(e);
         }
@@ -43,4 +44,6 @@ public class client {
             }
         }
     }
+
+    startConnection("197.0.0.1", 1370);
 }
