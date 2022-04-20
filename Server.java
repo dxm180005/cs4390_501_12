@@ -38,9 +38,28 @@ public class Server {
 					
 					//clientSentence = inFromClient.readLine();
 					//clientSentence = inFromClient.readLine();
+
 					if(clientSentence.equals("SIGTERM")) System.exit(1);
+					
 					System.out.println("IN WHILE LOOP");
 					System.out.println(clientSentence);
+					String[] fields = clientSentence.split("|");
+					if(fields[0].equals("START"))
+					{
+						//String name = fields[1];
+						connections.put(fields[1], new ConnectRecord(fields[1], connectionSocket.getRemoteSocketAddress()));
+						
+						
+						
+
+					}
+					else
+					{
+						
+
+
+					}
+					
 					capitalizedSentence += clientSentence;
 
 
@@ -60,7 +79,7 @@ public class Server {
 	} 
 
 	
-	public class ConnectRecord {
+	public static class ConnectRecord {
 
 		SocketAddress clientIP; 
 		String name;
@@ -68,15 +87,17 @@ public class Server {
 		long end;
 		long duration;
 
-		public ConnectRecord() {
-
+		public ConnectRecord(String name, SocketAddress clientIP) {
+			this.name = name;
+			this.clientIP = clientIP;
+			this.start = System.currentTimeMillis();
 
 		}
 
 		@Override
 		public String toString() {
 
-			return "";
+			return "[" + name + ", " + clientIP + ", " + start + "]";
 		}
 	}
 
