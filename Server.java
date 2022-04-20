@@ -37,7 +37,8 @@ public class Server {
 				{
 					
 					//clientSentence = inFromClient.readLine();
-					//clientSentence = inFromClient.readLine();i
+					//clientSentence = inFromClient.readLine();
+					if(clientSentence.equals("SIGTERM")) System.exit(1);
 					System.out.println("IN WHILE LOOP");
 					System.out.println(clientSentence);
 					capitalizedSentence += clientSentence;
