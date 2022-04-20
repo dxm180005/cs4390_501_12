@@ -30,9 +30,12 @@ public class client {
         }catch(Exception e){
             recievedPkt = e.toString();
         }
-        System.out.println("Packet recieved: " + recievedPkt);
-        String[] splitPkt = recievedPkt.split("|");
+        //System.out.println("Packet recieved: " + recievedPkt);
+        String[] splitPkt = recievedPkt.split("\\|");
         String returnMe = splitPkt[2];
+        if(splitPkt[0].equals("1")) {
+        	System.out.println("Calculation: " + splitPkt[2] + "\n");
+        }
         return returnMe;
     }
 
@@ -73,9 +76,11 @@ public class client {
     		}
     		else if(type == 2) {
     			System.out.println("Closing");
+    			body = "Closing";
     		}
     		System.out.print(type + "|" + clientName + "|" + body + "\n");
     		packet(type + "|" + clientName + "|" + body + "\n");
+    		
     	}
     	
     	stopConnection(clientName);
