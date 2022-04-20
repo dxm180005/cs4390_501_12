@@ -33,11 +33,11 @@ public class Server {
 				clientSentence = "";	
 				System.out.println("A: " + connectionSocket);				
 
-				while((clientSentence = inFromClient.readLine()) != null)
-				{
+				//while((clientSentence = inFromClient.readLine()) != null)
+				//{
 					
 					//clientSentence = inFromClient.readLine();
-					//clientSentence = inFromClient.readLine();
+					clientSentence = inFromClient.readLine();
 
 					//if(clientSentence.equals("SIGTERM")) System.exit(1);
 					
@@ -71,16 +71,19 @@ public class Server {
 						response = "1|" + fields[1] + "|"  + ans + "\n"; 
 
 					}
-					else
+					else if(fields[0].equals("2"))
 					{
-						
-
+						response = "2|" + fields[1] + "|ACK\n";
+							
+						ConnectRecord endR = connections.remove(fields[1]);
+						endR.end();
+						System.out.println(endR);
 
 					}
 					
 
 
-				} 
+				//} 
 				
 	
 				outToClient.writeBytes(response);
@@ -108,13 +111,22 @@ public class Server {
 			this.name = name;
 			this.clientIP = clientIP;
 			this.start = System.currentTimeMillis();
+			this.end = 0;
+			this.duration = 0;
+
+		}
+		
+		public void end() {
+
+			this.end = System.currentTimeMillis();
+			this.duration = end - start;
 
 		}
 
 		@Override
 		public String toString() {
 
-			return "[" + name + ", " + clientIP + ", " + start + "]";
+			return "[" + name + ", " + clientIP + ", " + start + ", " + end + ", " + duration + "]";
 		}
 	}
 
