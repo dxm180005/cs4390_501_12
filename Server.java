@@ -33,8 +33,8 @@ public class Server {
 				clientSentence = "";	
 				System.out.println("A: " + connectionSocket);				
 
-				//while((clientSentence = inFromClient.readLine()) != null)
-				//{
+				while((clientSentence = inFromClient.readLine()) != null)
+				{
 					
 					//clientSentence = inFromClient.readLine();
 					clientSentence = inFromClient.readLine();
@@ -78,15 +78,17 @@ public class Server {
 						ConnectRecord endR = connections.remove(fields[1]);
 						endR.end();
 						System.out.println(endR);
-
+						break;
 					}
+
+					
+					outToClient.writeBytes(response);
 					
 
 
-				//} 
+				} 
 				
 	
-				outToClient.writeBytes(response);
 
 				connectionSocket.close(); 
 			}
