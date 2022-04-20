@@ -42,7 +42,7 @@ public class client {
 
         if(ack == "ACK"){
             try {
-                in.close();
+                inToClient.close();
                 outToServer.close();
                 clientSocket.close();
             } catch (Exception e) {
