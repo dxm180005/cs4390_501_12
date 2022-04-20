@@ -7,7 +7,7 @@ public class Server {
 	public static void main(String argv[]) throws Exception 
     	{ 
       		String clientSentence; 
-      		String capitalizedSentence; 
+      		String response; 
 		
 		HashMap<String, ConnectRecord> connections = new HashMap<String, ConnectRecord>();
 
@@ -29,7 +29,7 @@ public class Server {
 
 
 				DataOutputStream  outToClient = new DataOutputStream(connectionSocket.getOutputStream()); 
-				capitalizedSentence = "";
+				response = "";
 				clientSentence = "";	
 				System.out.println("A: " + connectionSocket);				
 
@@ -39,18 +39,35 @@ public class Server {
 					//clientSentence = inFromClient.readLine();
 					//clientSentence = inFromClient.readLine();
 
-					if(clientSentence.equals("SIGTERM")) System.exit(1);
+					//if(clientSentence.equals("SIGTERM")) System.exit(1);
 					
 					System.out.println("IN WHILE LOOP");
 					System.out.println(clientSentence);
-					String[] fields = clientSentence.split("|");
-					if(fields[0].equals("START"))
+					String[] fields = clientSentence.split("\\|");
+					if(fields[0].equals("0"))
 					{
 						//String name = fields[1];
+						if(connections.containsKey(fields[1])) response = "3|";
 						connections.put(fields[1], new ConnectRecord(fields[1], connectionSocket.getRemoteSocketAddress()));
+						System.out.println(connections);	
 						
 						
-						
+
+					}
+					else if(fields[0].equals("1"))
+					{
+
+						double n1 = Double.parseDouble(fields[2]);
+						double n2 = Double.parseDouble(fields[4]);
+						double ans = 0;
+						String op = fields[3];
+						if(op.contains("+")) ans = n1 + n2;
+						else if(op.contains("-")) ans = n1 - n2;
+						else if(op.contains("*")) ans = n1*n2;
+						else if(op.contains("/")) ans = n1/n2;
+						else {};
+
+						response = "1|" + fields[1] + "|"  + ans; 
 
 					}
 					else
@@ -60,13 +77,12 @@ public class Server {
 
 					}
 					
-					capitalizedSentence += clientSentence;
 
 
 				} 
 				
 	
-				outToClient.writeBytes(capitalizedSentence);
+				outToClient.writeBytes(response);
 
 				connectionSocket.close(); 
 			}
