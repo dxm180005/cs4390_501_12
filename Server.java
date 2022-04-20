@@ -83,7 +83,7 @@ public class Server {
 
 					
 					outToClient.writeBytes(response);
-					
+					outToClient.flush();
 
 
 				} 
