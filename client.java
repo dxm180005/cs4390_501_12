@@ -31,12 +31,13 @@ public class client {
             recievedPkt = e.toString();
         }
         System.out.print("Packet recieved: " + recievedPkt);
-       
-        return recievedPkt;
+        String[] splitPkt = recievedPkt.split("|");
+        String returnMe = splitPkt[2];
+        return returnMe;
     }
 
-    public static void stopConnection(){
-        String closeConnectionPkt = "SIGTERM";
+    public static void stopConnection(String clientName){
+        String closeConnectionPkt = "2|" + clientName + "|Closing";
         String ack = packet(closeConnectionPkt);
 
         if(ack == "ackClose"){
@@ -76,6 +77,6 @@ public class client {
     		packet(type + "|" + clientName + "|" + body + "\n");
     	}
     	
-    	stopConnection();
+    	stopConnection(clientName);
     }
 }
