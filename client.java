@@ -7,7 +7,6 @@ public class client {
     private static Socket clientSocket;
     private static BufferedReader in;
     private static DataOutputStream out;
-    //private static BufferedReader userEntered = new BufferedReader(new InputStreamReader(System.in));
     private static Scanner userEntered = new Scanner(System.in);
     
     public static void startConnection(String ip, int port) {
@@ -41,7 +40,7 @@ public class client {
         String closeConnectionPkt = "2|" + clientName + "|Closing";
         String ack = packet(closeConnectionPkt);
 
-        if(ack == "ackClose"){
+        if(ack == "ACK"){
             try {
                 in.close();
                 out.close();
@@ -53,7 +52,7 @@ public class client {
     }
 
     public static void main(String argv[]) throws Exception {
-    	//startConnection("127.0.0.1", 1337);
+    	startConnection("127.0.0.1", 1337);
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.nextLine();
     	String body = "Open Connection";
@@ -67,7 +66,7 @@ public class client {
     			System.out.print("Enter first number: ");
     			int firstNumber = userEntered.nextInt();
     			System.out.print("Enter an operand(+ - * /):");
-    			String operand = userEntered.nextLine();    			
+    			String operand = userEntered.next();	
     			System.out.print("Enter second number: ");
     			int secondNumber = userEntered.nextInt();
     			body = firstNumber + "|" + operand + "|" + secondNumber;
