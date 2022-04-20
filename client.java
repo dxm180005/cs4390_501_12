@@ -16,6 +16,7 @@ public class client {
             System.out.print("Connection Success on port 1337\n");
         } catch(Exception e){
             System.out.print(e);
+            System.exit(1);
         }
     }
 
@@ -24,7 +25,7 @@ public class client {
         try{
         	System.out.print("Sending Packet: " + pkt);
             out.writeBytes(pkt);
-            out.flush();
+            //out.flush();
             recievedPkt = in.readLine();
         }catch(Exception e){
             recievedPkt = e.toString();
@@ -35,7 +36,7 @@ public class client {
     }
 
     public static void stopConnection(){
-        String closeConnectionPkt = "close";
+        String closeConnectionPkt = "SIGTERM";
         String ack = packet(closeConnectionPkt);
 
         if(ack == "ackClose"){
@@ -50,9 +51,27 @@ public class client {
     }
 
     public static void main(String argv[]) throws Exception {
-    	startConnection("127.0.0.1", 1337);
-    	packet("test\n");
-    	packet("test2\n");
+    	int destPort = 1337;
+    	startConnection("127.0.0.1", destPort);
+    	System.out.print("Enter your client name: ");
+    	String clientName = userEntered.readLine();
+    	String body = "";
+    	int type = 0;
+    	packet("0|" + clientName + "|" + body + "\n");
+    	while(type != 2){
+    		System.out.println("Types: 1 => Calculation, 2 => close connection");
+    		System.out.print("Enter type 1 or 2:");
+    		type = userEntered.read();
+    		if(type == 1) {
+    			System.out.print("Enter simple calculation(i.e. 1 * 2):");
+    			body = userEntered.readLine();
+    		}
+    		else if(type == 2) {
+    			System.out.println("");
+    		}
+    		packet(type + "|" + clientName + "|" + body + "\n");
+    	}
+    	
     	stopConnection();
     }
 }
