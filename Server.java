@@ -29,7 +29,7 @@ public class Server {
 
 
 				DataOutputStream  outToClient = new DataOutputStream(connectionSocket.getOutputStream()); 
-				response = "";
+				response = "\n";
 				clientSentence = "";	
 				System.out.println("A: " + connectionSocket);				
 
@@ -67,7 +67,7 @@ public class Server {
 						else if(op.contains("/")) ans = n1/n2;
 						else {};
 
-						response = "1|" + fields[1] + "|"  + ans; 
+						response = "1|" + fields[1] + "|"  + ans + "\n"; 
 
 					}
 					else
