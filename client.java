@@ -24,6 +24,7 @@ public class client {
         try{
         	System.out.print("Sending Packet: " + pkt);
             out.writeBytes(pkt);
+            out.flush();
             recievedPkt = in.readLine();
         }catch(Exception e){
             recievedPkt = e.toString();
@@ -48,9 +49,8 @@ public class client {
 
     public static void main(String argv[]) throws Exception {
     	startConnection("127.0.0.1", 1337);
-    	String recievedPkt = packet("Test");
+    	String recievedPkt = packet("test");
     	System.out.print("Packet recieved: " + recievedPkt);
-    	
     	stopConnection();
     }
 }
