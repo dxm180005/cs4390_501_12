@@ -55,7 +55,7 @@ public class client {
     	startConnection("127.0.0.1", destPort);
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.readLine();
-    	String body = "";
+    	String body = "Open Connection";
     	int type = 0;
     	packet("0|" + clientName + "|" + body + "\n");
     	while(type != 2){
@@ -63,11 +63,11 @@ public class client {
     		System.out.print("Enter type 1 or 2:");
     		type = userEntered.read();
     		if(type == 1) {
-    			System.out.print("Enter simple calculation(i.e. 1 * 2):");
+    			System.out.print("Enter simple calculation with spaces(i.e. 1 * 2):");
     			body = userEntered.readLine();
     		}
     		else if(type == 2) {
-    			System.out.println("");
+    			System.out.println("Closing");
     		}
     		packet(type + "|" + clientName + "|" + body + "\n");
     	}
