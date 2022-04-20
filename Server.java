@@ -50,6 +50,7 @@ public class Server {
 						if(connections.containsKey(fields[1])) response = "3|";
 						connections.put(fields[1], new ConnectRecord(fields[1], connectionSocket.getRemoteSocketAddress()));
 						System.out.println(connections);	
+						response = "0|" + fields[1] + "|ACK\n";
 						
 						
 
