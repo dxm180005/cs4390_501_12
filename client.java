@@ -5,15 +5,15 @@ import java.util.Scanner;
 public class client {
 
     private static Socket clientSocket;
-    private static BufferedReader in;
-    private static DataOutputStream out;
+    private static BufferedReader inToClient;
+    private static DataOutputStream outToServer;
     private static Scanner userEntered = new Scanner(System.in);
     
     public static void startConnection(String ip, int port) {
         try{
             clientSocket = new Socket(ip, port);
-            out = new DataOutputStream(clientSocket.getOutputStream());
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
+            outToServer = new DataOutputStream(clientSocket.getOutputStream());
+            inToClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
             System.out.print("Connection Success on port 1337\n");
         } catch(Exception e){
             System.out.print(e);
@@ -25,8 +25,8 @@ public class client {
         String recievedPkt;
         try{
         	System.out.print("Sending Packet: " + pkt);
-            out.writeBytes(pkt);
-            recievedPkt = in.readLine();
+            outToServer.writeBytes(pkt);
+            recievedPkt = inToClient.readLine();
         }catch(Exception e){
             recievedPkt = e.toString();
         }
@@ -43,7 +43,7 @@ public class client {
         if(ack == "ACK"){
             try {
                 in.close();
-                out.close();
+                outToServer.close();
                 clientSocket.close();
             } catch (Exception e) {
                 System.out.print(e);
