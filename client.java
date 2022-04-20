@@ -25,7 +25,6 @@ public class client {
         try{
         	System.out.print("Sending Packet: " + pkt);
             out.writeBytes(pkt);
-            //out.flush();
             recievedPkt = in.readLine();
         }catch(Exception e){
             recievedPkt = e.toString();
