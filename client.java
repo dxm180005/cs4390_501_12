@@ -1,12 +1,13 @@
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class client {
 
     private static Socket clientSocket;
     private static BufferedReader in;
     private static DataOutputStream out;
-    private static BufferedReader userEntered = new BufferedReader(new InputStreamReader(System.in));
+    private static Scanner userEntered = new Scanner(System.in);
     
     public static void startConnection(String ip, int port) {
         try{
@@ -29,7 +30,7 @@ public class client {
         }catch(Exception e){
             recievedPkt = e.toString();
         }
-        System.out.print("Packet recieved: " + recievedPkt);
+        System.out.println("Packet recieved: " + recievedPkt);
         String[] splitPkt = recievedPkt.split("|");
         String returnMe = splitPkt[2];
         return returnMe;
@@ -39,7 +40,7 @@ public class client {
         String closeConnectionPkt = "2|" + clientName + "|Closing";
         String ack = packet(closeConnectionPkt);
 
-        if(ack == "ackClose"){
+        if(ack == "ACK"){
             try {
                 in.close();
                 out.close();
@@ -53,26 +54,27 @@ public class client {
     public static void main(String argv[]) throws Exception {
     	startConnection("127.0.0.1", 1337);
     	System.out.print("Enter your client name: ");
-    	String clientName = userEntered.readLine();
+    	String clientName = userEntered.nextLine();
     	String body = "Open Connection";
     	int type = 0;
     	packet("0|" + clientName + "|" + body + "\n");
     	while(type != 2){
     		System.out.println("Types: 1 => Calculation, 2 => close connection");
     		System.out.print("Enter type 1 or 2:");
-    		type = userEntered.read();
+    		type = userEntered.nextInt();
     		if(type == 1) {
     			System.out.print("Enter first number: ");
-    			String firstNumber = userEntered.readLine();
+    			int firstNumber = userEntered.nextInt();
     			System.out.print("Enter an operand(+ - * /):");
-    			String operand = userEntered.readLine();    			
+    			String operand = userEntered.next();	
     			System.out.print("Enter second number: ");
-    			String secondNumber = userEntered.readLine();
+    			int secondNumber = userEntered.nextInt();
     			body = firstNumber + "|" + operand + "|" + secondNumber;
     		}
     		else if(type == 2) {
     			System.out.println("Closing");
     		}
+    		System.out.print(type + "|" + clientName + "|" + body + "\n");
     		packet(type + "|" + clientName + "|" + body + "\n");
     	}
     	
