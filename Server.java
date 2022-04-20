@@ -9,13 +9,13 @@ public class Server {
       		String clientSentence; 
       		String capitalizedSentence; 
 		
-		//HashMap<S
+		HashMap<String, ConnectRecord> connections = new HashMap<String, ConnectRecord>();
 
 		ServerSocket welcomeSocket; 
 
 		try{
-      			welcomeSocket = new ServerSocket(6789); 
-			System.out.println("Server succesfully created on Port 6789");
+      			welcomeSocket = new ServerSocket(1337); 
+			System.out.println("Server succesfully created on Port 1337");
 		
 
 
@@ -30,8 +30,15 @@ public class Server {
 
 				DataOutputStream  outToClient = new DataOutputStream(connectionSocket.getOutputStream()); 
 				capitalizedSentence = "";
+				clientSentence = "";	
+				System.out.println("A: " + connectionSocket);				
+
 				while((clientSentence = inFromClient.readLine()) != null)
 				{
+					
+					//clientSentence = inFromClient.readLine();
+					//clientSentence = inFromClient.readLine();i
+					System.out.println("IN WHILE LOOP");
 					System.out.println(clientSentence);
 					capitalizedSentence += clientSentence;
 
@@ -47,16 +54,29 @@ public class Server {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			System.exit(1);
 		}
 	} 
 
 	
-	public class connectRecord {
+	public class ConnectRecord {
 
 		SocketAddress clientIP; 
+		String name;
+		long start;
+		long end;
+		long duration;
+
+		public ConnectRecord() {
 
 
+		}
 
+		@Override
+		public String toString() {
+
+			return "";
+		}
 	}
 
 
