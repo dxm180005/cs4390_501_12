@@ -37,7 +37,7 @@ public class Server {
 				{
 					
 					//clientSentence = inFromClient.readLine();
-					clientSentence = inFromClient.readLine();
+					//clientSentence = inFromClient.readLine();
 
 					//if(clientSentence.equals("SIGTERM")) System.exit(1);
 					
