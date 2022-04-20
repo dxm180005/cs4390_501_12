@@ -31,12 +31,13 @@ public class client {
             recievedPkt = e.toString();
         }
         System.out.print("Packet recieved: " + recievedPkt);
-       
-        return recievedPkt;
+        String[] splitPkt = recievedPkt.split("|");
+        String returnMe = splitPkt[2];
+        return returnMe;
     }
 
-    public static void stopConnection(){
-        String closeConnectionPkt = "SIGTERM";
+    public static void stopConnection(String clientName){
+        String closeConnectionPkt = "2|" + clientName + "|Closing";
         String ack = packet(closeConnectionPkt);
 
         if(ack == "ackClose"){
@@ -51,11 +52,10 @@ public class client {
     }
 
     public static void main(String argv[]) throws Exception {
-    	int destPort = 1337;
-    	startConnection("127.0.0.1", destPort);
+    	startConnection("127.0.0.1", 1337);
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.readLine();
-    	String body = "";
+    	String body = "Open Connection";
     	int type = 0;
     	packet("0|" + clientName + "|" + body + "\n");
     	while(type != 2){
@@ -63,15 +63,20 @@ public class client {
     		System.out.print("Enter type 1 or 2:");
     		type = userEntered.read();
     		if(type == 1) {
-    			System.out.print("Enter simple calculation(i.e. 1 * 2):");
-    			body = userEntered.readLine();
+    			System.out.print("Enter first number: ");
+    			String firstNumber = userEntered.readLine();
+    			System.out.print("Enter an operand(+ - * /):");
+    			String operand = userEntered.readLine();    			
+    			System.out.print("Enter second number: ");
+    			String secondNumber = userEntered.readLine();
+    			body = firstNumber + "|" + operand + "|" + secondNumber;
     		}
     		else if(type == 2) {
-    			System.out.println("");
+    			System.out.println("Closing");
     		}
     		packet(type + "|" + clientName + "|" + body + "\n");
     	}
     	
-    	stopConnection();
+    	stopConnection(clientName);
     }
 }
