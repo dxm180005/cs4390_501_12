@@ -76,7 +76,7 @@ public class client {
     public static void main(String argv[]) throws Exception {
     	//starts connection to server on port 4390
     	startConnection("127.0.0.1", 4390);
-    	System.out.print("Client Running");
+    	System.out.println("Client Running");
     	//get the client name
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.nextLine();
