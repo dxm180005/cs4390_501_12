@@ -14,7 +14,7 @@ public class client {
             clientSocket = new Socket(ip, port);
             outToServer = new DataOutputStream(clientSocket.getOutputStream());
             inToClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
-            System.out.print("Connection Success on port 1337\n");
+            System.out.print("Connection Success on port "+ port +"\n");
         } catch(Exception e){
             System.out.print(e);
             System.exit(1);
@@ -41,7 +41,7 @@ public class client {
     }
 
     public static void stopConnection(String ack){
-        if(ack == "ACK"){
+        if(ack.equals("ACK")){
             try {
                 inToClient.close();
                 outToServer.close();
@@ -58,7 +58,7 @@ public class client {
     }
 
     public static void main(String argv[]) throws Exception {
-    	startConnection("127.0.0.1", 1337);
+    	startConnection("127.0.0.1", 4390);
     	System.out.print("Client Running");
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.nextLine();
@@ -82,7 +82,6 @@ public class client {
     			System.out.println("Closing");
     			body = "Closing";
     		}
-    		System.out.print(type + "|" + clientName + "|" + body + "\n");
     		packet(type + "|" + clientName + "|" + body + "\n");
     	}
     }
