@@ -121,8 +121,16 @@ public class ServerNode extends Thread {
 			
 			ServerNode.lock.lock();
 			
-			
-			
+			try {
+		      FileWriter logout = new FileWriter("connection_records.log", true);
+		      logout.write(toString() + "\n");
+		      logout.close();
+		    } catch (IOException e) {
+		 
+		      e.printStackTrace();
+		      
+		    }
+		
 			ServerNode.lock.unlock();
 			
 		}

@@ -30,7 +30,7 @@ public class client {
         }catch(Exception e){
             recievedPkt = e.toString();
         }
-        //System.out.println("Packet recieved: " + recievedPkt);
+        System.out.println("Packet recieved: " + recievedPkt);
         String[] splitPkt = recievedPkt.split("\\|");
         if(splitPkt[0].equals("1")) {
         	System.out.println("Calculation: " + splitPkt[2] + "\n");
@@ -58,8 +58,7 @@ public class client {
     }
 
     public static void main(String argv[]) throws Exception {
-    	startConnection("127.0.0.1", 1337);
-    	System.out.print("Client Running");
+    	startConnection("127.0.0.1", 4390);
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.nextLine();
     	String body = "Open Connection";
