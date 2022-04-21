@@ -1,4 +1,5 @@
 import java.net.*;
+import java.util.concurrent.locks.ReentrantLock;
 import java.io.*;
 import java.lang.Thread;
 
@@ -8,6 +9,7 @@ public class ServerNode extends Thread {
 	String clientSentence; 
 	String response;
 	ConnectRecord record;
+	public static ReentrantLock lock = new ReentrantLock();
 
 	public ServerNode(Socket connectionSocket) throws Exception 
 	{ 
@@ -116,7 +118,13 @@ public class ServerNode extends Thread {
 			this.end = System.currentTimeMillis();
 			this.duration = end - start;
 			//TODO Write out to file.
-
+			
+			ServerNode.lock.lock();
+			
+			
+			
+			ServerNode.lock.unlock();
+			
 		}
 
 		@Override
