@@ -55,6 +55,7 @@ public class client {
 
     //function to close socket, input/output stream, and scanner and also terminate program
     public static void stopConnection(String ack){
+    	//checks for ACK
         if(ack.equals("ACK")){
             try {
                 inToClient.close();
