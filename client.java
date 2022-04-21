@@ -21,7 +21,7 @@ public class client {
         }
     }
 
-    public static String packet(String pkt){
+    public static void packet(String pkt){
         String recievedPkt;
         try{
         	System.out.print("Sending Packet: " + pkt);
@@ -32,30 +32,34 @@ public class client {
         }
         //System.out.println("Packet recieved: " + recievedPkt);
         String[] splitPkt = recievedPkt.split("\\|");
-        String returnMe = splitPkt[2];
         if(splitPkt[0].equals("1")) {
         	System.out.println("Calculation: " + splitPkt[2] + "\n");
         }
-        return returnMe;
+        if(splitPkt[0].equals("2")) {
+        	stopConnection(splitPkt[2]);
+        }
     }
 
-    public static void stopConnection(String clientName){
-        String closeConnectionPkt = "2|" + clientName + "|Closing";
-        String ack = packet(closeConnectionPkt);
-
+    public static void stopConnection(String ack){
         if(ack == "ACK"){
             try {
                 inToClient.close();
                 outToServer.close();
                 clientSocket.close();
+                System.out.println("Connections closed, terminating client application");
+                System.exit(0);
             } catch (Exception e) {
                 System.out.print(e);
             }
+        } else {
+        	System.out.println("Error closing connections, terminating client application");
+        	System.exit(1);
         }
     }
 
     public static void main(String argv[]) throws Exception {
     	startConnection("127.0.0.1", 1337);
+    	System.out.print("Client Running");
     	System.out.print("Enter your client name: ");
     	String clientName = userEntered.nextLine();
     	String body = "Open Connection";
@@ -80,9 +84,6 @@ public class client {
     		}
     		System.out.print(type + "|" + clientName + "|" + body + "\n");
     		packet(type + "|" + clientName + "|" + body + "\n");
-    		
     	}
-    	
-    	stopConnection(clientName);
     }
 }
