@@ -28,7 +28,7 @@ public class ServerNode extends Thread {
 
 			response = "\n";
 			clientSentence = "";	
-			System.out.println("A: " + connectionSocket);				
+			//System.out.println("A: " + connectionSocket);				
 
 			while((clientSentence = inFromClient.readLine()) != null)
 			{
@@ -38,8 +38,8 @@ public class ServerNode extends Thread {
 
 				//if(clientSentence.equals("SIGTERM")) System.exit(1);
 				
-				System.out.println("IN WHILE LOOP");
-				System.out.println(clientSentence);
+				//System.out.println("IN WHILE LOOP");
+				//System.out.println(clientSentence);
 				String[] fields = clientSentence.split("\\|");
 				if(fields[0].equals("0"))
 				{

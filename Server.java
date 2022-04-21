@@ -9,7 +9,8 @@ public class Server {
 		ServerSocket welcomeSocket; 
 
 		try{
-      		welcomeSocket = new ServerSocket(4390); 
+			
+			welcomeSocket = new ServerSocket(4390); 
 			System.out.println("Server succesfully created on Port 4390");
 		
 
