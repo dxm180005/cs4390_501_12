@@ -9,10 +9,10 @@ CLASSES = \
 	ServerNode.java
 
 
-default:CLASSES
+default: classes
 
 classes:$(CLASSES:.java=.class)
 
 
-clean:\
+clean:
 	$(RM) *.class
